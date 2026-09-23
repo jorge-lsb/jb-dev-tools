@@ -47,7 +47,7 @@ setup_nvim() {
     report_updated "~/.config/nvim (backup do anterior salvo)"
   fi
 
-  if ! run_step "clonar LazyVim starter" git clone https://github.com/LazyVim/LazyVim.git "$nvim_dir"; then
+  if ! run_step "clonar LazyVim starter" git clone https://github.com/LazyVim/starter.git "$nvim_dir"; then
     return
   fi
   rm -rf "$nvim_dir/.git"

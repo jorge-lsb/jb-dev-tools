@@ -34,7 +34,16 @@ setup_tmux() {
     report_installed "~/.tmux.conf"
   fi
 
+  # O install_plugins.sh do TPM lê as variáveis @plugin de dentro de uma
+  # sessão tmux com o .tmux.conf já carregado — sem isso ele aborta com
+  # "Tmux Plugin Manager not configured". Sobe uma sessão só pra isso.
+  local bootstrap_session="jb_dev_tools_tpm_bootstrap"
+  tmux new-session -d -s "$bootstrap_session" -c "$HOME" >/dev/null 2>&1
+  tmux source-file "$target" >/dev/null 2>&1
+
   if run_step "instalar plugins do tmux (TPM)" "$HOME/.tmux/plugins/tpm/scripts/install_plugins.sh"; then
     report_installed "plugins do tmux (sensible, resurrect, continuum, catppuccin)"
   fi
+
+  tmux kill-session -t "$bootstrap_session" >/dev/null 2>&1
 }
