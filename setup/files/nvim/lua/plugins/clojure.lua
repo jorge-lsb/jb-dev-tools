@@ -14,8 +14,8 @@ return {
       -- Auto-require do namespace do buffer ao abrir
       vim.g["conjure#client#clojure#nrepl#eval#auto_require"] = true
 
-      -- Não sobe um nREPL Babashka temporário quando não acha .nrepl-port —
-      -- conecta manual (\cf) num REPL real depois de subir num pane do tmux.
+      -- Não sobe um nREPL Babashka temporário quando não acha .nrepl-port.
+      -- Conecta manual (\cf) num REPL real depois de subir num pane do tmux.
       vim.g["conjure#client#clojure#nrepl#connection#auto_repl#enabled"] = false
 
       -- Highlight do form avaliado

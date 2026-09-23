@@ -1,9 +1,9 @@
 # >>> jb-dev-tools >>>
 # Bloco gerenciado pelo setup do jb-dev-tools. Rodar o setup de novo
-# substitui só este bloco — não edite manualmente acima/abaixo dele.
+# substitui só este bloco, não edite manualmente acima/abaixo dele.
 
 # bat/fd têm nomes de binário diferentes entre distros (ex.: Ubuntu via apt
-# usa batcat/fdfind pra não colidir com outros pacotes) — resolve com alias.
+# usa batcat/fdfind pra não colidir com outros pacotes), resolve com alias.
 if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
   alias bat='batcat'
 fi

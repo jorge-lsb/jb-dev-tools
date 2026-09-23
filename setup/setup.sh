@@ -16,7 +16,7 @@ if [[ "$OS" == "unsupported" ]]; then
   exit 1
 fi
 
-echo "jb-dev-tools setup — SO detectado: $OS"
+echo "jb-dev-tools setup (SO detectado: $OS)"
 echo ""
 
 pkg_update_index

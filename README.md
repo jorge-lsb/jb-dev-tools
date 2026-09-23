@@ -1,6 +1,6 @@
 # jb-dev-tools
 
-Kit pessoal de ferramentas de dev — scripts e configs que eu quero ter à mão em qualquer PC novo (macOS ou Linux/WSL), sem precisar copiar tudo manualmente de novo.
+Kit pessoal de ferramentas de dev: scripts e configs que eu quero ter à mão em qualquer PC novo (macOS ou Linux/WSL), sem precisar copiar tudo manualmente de novo.
 
 ## Índice
 
@@ -17,7 +17,7 @@ cd jb-dev-tools
 ./setup/setup.sh
 ```
 
-O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via apt) e pergunta, um bloco por vez, o que você quer instalar/configurar: tmux, nvim, shell. É seguro rodar de novo — cada módulo é idempotente (pula o que já está instalado, faz backup do que for sobrescrever) e ao final imprime um relatório do que já estava lá, do que foi instalado/atualizado e do que falhou (com um log temporário pra investigar).
+O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via apt) e pergunta, um bloco por vez, o que você quer instalar/configurar: tmux, nvim, shell. É seguro rodar de novo: cada módulo é idempotente (pula o que já está instalado, faz backup do que for sobrescrever) e ao final imprime um relatório do que já estava lá, do que foi instalado/atualizado e do que falhou (com um log temporário pra investigar).
 
 ## O que o setup configura
 
@@ -44,19 +44,19 @@ O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via 
 ## Atalhos e aliases pra lembrar
 
 **tmux** (prefix = `Ctrl+a`)
-- `prefix + |` / `prefix + -` — split horizontal/vertical (herda o diretório atual)
-- `Alt + h/j/k/l` — navega entre panes (sem precisar do prefix)
-- `prefix + H/J/K/L` — redimensiona o pane atual
-- `prefix + n` / `prefix + p` — próxima/anterior window
-- `prefix + g` — abre um popup com uma sessão dedicada do Claude Code pro diretório atual (fechar o popup só faz detach, não mata o processo)
-- `prefix + Ctrl+l` — limpa a tela e o scrollback
-- `prefix + r` — recarrega o `~/.tmux.conf`
+- `prefix + |` / `prefix + -`: split horizontal/vertical (herda o diretório atual)
+- `Alt + h/j/k/l`: navega entre panes (sem precisar do prefix)
+- `prefix + H/J/K/L`: redimensiona o pane atual
+- `prefix + n` / `prefix + p`: próxima/anterior window
+- `prefix + g`: abre um popup com uma sessão dedicada do Claude Code pro diretório atual (fechar o popup só faz detach, não mata o processo)
+- `prefix + Ctrl+l`: limpa a tela e o scrollback
+- `prefix + r`: recarrega o `~/.tmux.conf`
 
 **shell**
-- `tls` / `ta <nome>` / `tn <nome>` / `tk <nome>` — listar / anexar / criar / matar sessão tmux
-- `lg` — abre o lazygit
-- `v` / `vi` / `vim` — abrem o `nvim`
-- `z <termo>` — pula pra um diretório frequente (zoxide)
+- `tls` / `ta <nome>` / `tn <nome>` / `tk <nome>`: listar / anexar / criar / matar sessão tmux
+- `lg`: abre o lazygit
+- `v` / `vi` / `vim`: abrem o `nvim`
+- `z <termo>`: pula pra um diretório frequente (zoxide)
 
 ## Estrutura do repo
 
@@ -68,4 +68,4 @@ setup/
 └── files/             # dotfiles versionados que os módulos copiam
 ```
 
-Esse repo é o ponto de partida pra guardar qualquer outro script/ferramenta pessoal de dev — novas seções entram aqui conforme forem surgindo.
+Esse repo é o ponto de partida pra guardar qualquer outro script/ferramenta pessoal de dev: novas seções entram aqui conforme forem surgindo.
