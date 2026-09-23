@@ -19,15 +19,24 @@ report_failed() {
 }
 
 # run_step <descrição> <comando...>
-# Executa o comando; stdout/stderr de falha vão pro log temp. Marca o resultado.
+# Executa o comando mostrando a saída ao vivo no terminal (passos como
+# instalação de pacotes ou "Lazy sync" do nvim podem demorar bastante, e
+# sem isso parece que o script travou). A mesma saída também vai pro log
+# temp, pra investigar depois em caso de falha. Marca o resultado.
 run_step() {
   local desc="$1"
   shift
+
+  echo ""
+  echo ">> $desc..."
   {
     echo "=== $desc ($(date +%H:%M:%S)) ==="
   } >>"$REPORT_LOG_FILE"
 
-  if "$@" >>"$REPORT_LOG_FILE" 2>&1; then
+  "$@" 2>&1 | tee -a "$REPORT_LOG_FILE"
+  local status="${PIPESTATUS[0]}"
+
+  if ((status == 0)); then
     return 0
   else
     report_failed "$desc"
