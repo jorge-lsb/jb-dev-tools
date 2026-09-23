@@ -44,6 +44,42 @@ _install_if_missing() {
   fi
 }
 
+_install_lazygit() {
+  if pkg_installed lazygit; then
+    report_already_installed "lazygit"
+    return
+  fi
+
+  if [[ "$OS" == "mac" ]]; then
+    if run_step "instalar lazygit" pkg_install lazygit; then
+      report_installed "lazygit"
+    fi
+    return
+  fi
+
+  # No Ubuntu/Debian o lazygit não está nos repos do apt, então instala
+  # o binário direto da release mais recente no GitHub.
+  local arch
+  case "$(uname -m)" in
+    x86_64) arch="x86_64" ;;
+    aarch64 | arm64) arch="arm64" ;;
+    *) arch="x86_64" ;;
+  esac
+
+  local lg_tmp
+  lg_tmp="$(mktemp -d)"
+  if run_step "instalar lazygit (release do GitHub)" bash -c "
+    set -e
+    version=\$(curl -fsSL https://api.github.com/repos/jesseduffield/lazygit/releases/latest | grep -m1 '\"tag_name\"' | sed -E 's/.*\"v([^\"]+)\".*/\\1/')
+    curl -fsSL -o '$lg_tmp/lazygit.tar.gz' \"https://github.com/jesseduffield/lazygit/releases/download/v\${version}/lazygit_\${version}_Linux_${arch}.tar.gz\"
+    tar -xf '$lg_tmp/lazygit.tar.gz' -C '$lg_tmp' lazygit
+    sudo install '$lg_tmp/lazygit' /usr/local/bin/lazygit
+  "; then
+    report_installed "lazygit"
+  fi
+  rm -rf "$lg_tmp"
+}
+
 _merge_bashrc_block() {
   local snippet_file="$1"
   local target="$HOME/.bashrc"
@@ -74,9 +110,11 @@ setup_shell() {
   local repo_dir="$1"
 
   local tool
-  for tool in fzf ripgrep bat fd zoxide lazygit starship; do
+  for tool in fzf ripgrep bat fd zoxide starship; do
     _install_if_missing "$tool"
   done
+
+  _install_lazygit
 
   if [[ -d "$HOME/.local/share/blesh" ]]; then
     report_already_installed "ble.sh"
