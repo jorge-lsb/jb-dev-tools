@@ -1,0 +1,66 @@
+# >>> jb-dev-tools >>>
+# Bloco gerenciado pelo setup do jb-dev-tools. Rodar o setup de novo
+# substitui só este bloco — não edite manualmente acima/abaixo dele.
+
+# bat/fd têm nomes de binário diferentes entre distros (ex.: Ubuntu via apt
+# usa batcat/fdfind pra não colidir com outros pacotes) — resolve com alias.
+if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
+  alias bat='batcat'
+fi
+if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
+  alias fd='fdfind'
+fi
+
+# fzf
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --bash)"
+  _jb_bat_bin="bat"
+  command -v bat >/dev/null 2>&1 || _jb_bat_bin="batcat"
+  export FZF_DEFAULT_OPTS="
+    --border=rounded
+    --margin=1
+    --padding=1
+    --info=inline
+    --preview-window='right:60%:border-rounded'
+    --preview '$_jb_bat_bin --color=always --style=plain,numbers --theme=Coldark-Dark {}'
+  "
+  unset _jb_bat_bin
+  if command -v fd >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+  elif command -v rg >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
+  fi
+fi
+
+# zoxide (cd inteligente baseado em frequência/recência)
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init bash)"
+
+# starship
+command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
+
+# aliases
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+command -v lazygit >/dev/null 2>&1 && alias lg='lazygit'
+alias tls='tmux ls'
+alias ta='tmux attach -t'
+alias tn='tmux new -s'
+alias tk='tmux kill-session -t'
+
+# aviso de sessões tmux ativas ao abrir um shell novo fora do tmux
+if [[ -z "$TMUX" ]] && command -v tmux >/dev/null 2>&1; then
+  _jb_tmux_sessions=$(tmux ls 2>/dev/null)
+  if [[ -n "$_jb_tmux_sessions" ]]; then
+    echo "── sessões tmux rodando ──"
+    echo "$_jb_tmux_sessions"
+    echo "Anexar com: ta <nome>"
+    echo ""
+  fi
+  unset _jb_tmux_sessions
+fi
+
+# ble.sh: syntax highlight + autosuggestion fantasma de histórico (tipo
+# zsh-autosuggestions/fish). Precisa ser sourced perto do fim do .bashrc.
+[[ -f ~/.local/share/blesh/ble.sh ]] && source ~/.local/share/blesh/ble.sh
+# <<< jb-dev-tools <<<
