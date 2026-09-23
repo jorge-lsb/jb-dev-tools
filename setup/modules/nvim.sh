@@ -8,7 +8,7 @@ setup_nvim() {
     if dpkg -s build-essential >/dev/null 2>&1; then
       report_already_installed "build-essential"
     else
-      if run_step "instalar build-essential" sudo apt-get install -y build-essential; then
+      if run_step "install build-essential" sudo apt-get install -y build-essential; then
         report_installed "build-essential"
       fi
     fi
@@ -16,7 +16,7 @@ setup_nvim() {
     if xcode-select -p >/dev/null 2>&1; then
       report_already_installed "Xcode Command Line Tools"
     else
-      if run_step "instalar Xcode Command Line Tools" xcode-select --install; then
+      if run_step "install Xcode Command Line Tools" xcode-select --install; then
         report_installed "Xcode Command Line Tools"
       fi
     fi
@@ -36,31 +36,31 @@ setup_nvim() {
     local pkg_name="$dep"
     [[ "$dep" == "fd" && "$OS" == "linux" ]] && pkg_name="fd-find"
 
-    if run_step "instalar $dep" pkg_install "$pkg_name"; then
+    if run_step "install $dep" pkg_install "$pkg_name"; then
       report_installed "$dep"
     fi
   done
 
   local nvim_dir="$HOME/.config/nvim"
   if [[ -d "$nvim_dir" ]]; then
-    mv "$nvim_dir" "$nvim_dir.bak-$(date +%Y%m%d-%H%M%S)"
-    report_updated "~/.config/nvim (backup do anterior salvo)"
+    mv -f "$nvim_dir" "$nvim_dir.bak-$(date +%Y%m%d-%H%M%S)"
+    report_updated "~/.config/nvim (previous version backed up)"
   fi
 
-  if ! run_step "clonar LazyVim starter" git clone https://github.com/LazyVim/starter.git "$nvim_dir"; then
+  if ! run_step "clone LazyVim starter" git clone https://github.com/LazyVim/starter.git "$nvim_dir"; then
     return
   fi
   rm -rf "$nvim_dir/.git"
   report_installed "LazyVim starter"
 
   mkdir -p "$nvim_dir/lua/config" "$nvim_dir/lua/plugins"
-  cp "$repo_dir/files/nvim/lua/config/options.lua" "$nvim_dir/lua/config/options.lua"
-  cp "$repo_dir/files/nvim/lua/config/autocmds.lua" "$nvim_dir/lua/config/autocmds.lua"
-  cp "$repo_dir/files/nvim/lazyvim.json" "$nvim_dir/lazyvim.json"
-  cp "$repo_dir/files/nvim/lua/plugins/clojure.lua" "$nvim_dir/lua/plugins/clojure.lua"
-  report_updated "config custom do nvim (options, autocmds, lazyvim.json, conjure)"
+  cp -f "$repo_dir/files/nvim/lua/config/options.lua" "$nvim_dir/lua/config/options.lua"
+  cp -f "$repo_dir/files/nvim/lua/config/autocmds.lua" "$nvim_dir/lua/config/autocmds.lua"
+  cp -f "$repo_dir/files/nvim/lazyvim.json" "$nvim_dir/lazyvim.json"
+  cp -f "$repo_dir/files/nvim/lua/plugins/clojure.lua" "$nvim_dir/lua/plugins/clojure.lua"
+  report_updated "custom nvim config (options, autocmds, lazyvim.json, conjure)"
 
-  if run_step "sincronizar plugins do nvim (Lazy sync)" nvim --headless "+Lazy! sync" +qa; then
-    report_installed "plugins/LSPs do nvim (Lazy sync)"
+  if run_step "sync nvim plugins (Lazy sync)" nvim --headless "+Lazy! sync" +qa; then
+    report_installed "nvim plugins/LSPs (Lazy sync)"
   fi
 }

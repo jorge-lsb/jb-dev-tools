@@ -60,7 +60,17 @@ if [[ -z "$TMUX" ]] && command -v tmux >/dev/null 2>&1; then
   unset _jb_tmux_sessions
 fi
 
+# bash-completion no Homebrew não é sourced automaticamente feito no
+# .bashrc padrão do Ubuntu (que já cuida disso sozinho). Sem isso, coisas
+# como "tmux attach -t <tab>" não sugerem as sessões rodando.
+if [[ "$(uname -s)" == "Darwin" ]] && command -v brew >/dev/null 2>&1; then
+  _jb_bash_completion="$(brew --prefix)/etc/profile.d/bash_completion.sh"
+  [[ -r "$_jb_bash_completion" ]] && source "$_jb_bash_completion"
+  unset _jb_bash_completion
+fi
+
 # ble.sh: syntax highlight + autosuggestion fantasma de histórico (tipo
-# zsh-autosuggestions/fish). Precisa ser sourced perto do fim do .bashrc.
-[[ -f ~/.local/share/blesh/ble.sh ]] && source ~/.local/share/blesh/ble.sh
+# zsh-autosuggestions/fish). O attach precisa ser a última coisa do
+# .bashrc (depois de fzf/bash-completion/etc.), senão perde bindings.
+[[ ${BLE_VERSION-} ]] && ble-attach
 # <<< jb-dev-tools <<<

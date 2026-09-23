@@ -28,7 +28,6 @@ O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via 
 | [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) | defaults sensatos pro tmux | github.com/tmux-plugins/tmux-sensible |
 | [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) | salva/restaura sessões | github.com/tmux-plugins/tmux-resurrect |
 | [tmux-continuum](https://github.com/tmux-plugins/tmux-continuum) | autosave/autorestore de sessões | github.com/tmux-plugins/tmux-continuum |
-| [catppuccin/tmux](https://github.com/catppuccin/tmux) | tema visual (mocha) | github.com/catppuccin/tmux |
 | [Neovim](https://github.com/neovim/neovim) | editor | github.com/neovim/neovim |
 | [LazyVim](https://github.com/LazyVim/LazyVim) | distro de config do Neovim | github.com/LazyVim/LazyVim |
 | [Conjure](https://github.com/Olical/conjure) | REPL interativo (Clojure) | github.com/Olical/conjure |
@@ -38,7 +37,8 @@ O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via 
 | [bat](https://github.com/sharkdp/bat) | `cat` com highlight, usado no preview do fzf | github.com/sharkdp/bat |
 | [zoxide](https://github.com/ajeetdsouza/zoxide) | `cd` inteligente (aprende os diretórios mais usados) | github.com/ajeetdsouza/zoxide |
 | [ble.sh](https://github.com/akinomyoga/ble.sh) | syntax highlight + autosuggestion fantasma no bash | github.com/akinomyoga/ble.sh |
-| [starship](https://github.com/starship/starship) | prompt (tema catppuccin mocha) | github.com/starship/starship |
+| [bash-completion](https://github.com/scop/bash-completion) | completion de comandos (ex.: nomes de sessão do tmux) | github.com/scop/bash-completion |
+| [starship](https://github.com/starship/starship) | prompt | github.com/starship/starship |
 | [lazygit](https://github.com/jesseduffield/lazygit) | TUI pra git | github.com/jesseduffield/lazygit |
 
 ## Atalhos e aliases pra lembrar

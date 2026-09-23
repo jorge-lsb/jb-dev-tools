@@ -1,0 +1,6 @@
+# >>> jb-dev-tools-top >>>
+# ble.sh precisa ser carregado (sem attach ainda) bem no início do
+# .bashrc pra funcionar de forma consistente dentro e fora do tmux.
+# O attach de verdade acontece no bloco do final do arquivo.
+[[ $- == *i* ]] && [[ -f ~/.local/share/blesh/ble.sh ]] && source ~/.local/share/blesh/ble.sh --noattach
+# <<< jb-dev-tools-top <<<
