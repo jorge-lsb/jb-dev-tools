@@ -19,6 +19,8 @@ cd jb-dev-tools
 
 O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via apt) e pergunta, um bloco por vez, o que você quer instalar/configurar: tmux, nvim, shell. É seguro rodar de novo: cada módulo é idempotente (pula o que já está instalado, faz backup do que for sobrescrever) e ao final imprime um relatório do que já estava lá, do que foi instalado/atualizado e do que falhou (com um log temporário pra investigar).
 
+O módulo do Neovim configura o Bash Language Server para navegação e símbolos entre arquivos Bash. Quando necessário, instala Node.js 24 (requisito do servidor), e o Mason instala o servidor e o ShellCheck; o shfmt já faz parte das ferramentas padrão do LazyVim. No Neovim, use `gd` para ir à definição, `gr` para referências, `:LspInfo` para conferir se `bashls` conectou e `:Mason` para ver as ferramentas instaladas.
+
 ## O que o setup configura
 
 | Ferramenta | Pra quê | Repo oficial |
@@ -31,6 +33,10 @@ O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via 
 | [Neovim](https://github.com/neovim/neovim) | editor | github.com/neovim/neovim |
 | [LazyVim](https://github.com/LazyVim/LazyVim) | distro de config do Neovim | github.com/LazyVim/LazyVim |
 | [Conjure](https://github.com/Olical/conjure) | REPL interativo (Clojure) | github.com/Olical/conjure |
+| [Node.js](https://nodejs.org/) | runtime necessário para o Bash Language Server | nodejs.org |
+| [Bash Language Server](https://github.com/bash-lsp/bash-language-server) | navegação, símbolos e recursos de IDE para Bash | github.com/bash-lsp/bash-language-server |
+| [ShellCheck](https://github.com/koalaman/shellcheck) | diagnósticos de scripts Bash pelo LSP | github.com/koalaman/shellcheck |
+| [shfmt](https://github.com/mvdan/sh) | formatação de scripts shell no LazyVim | github.com/mvdan/sh |
 | [fzf](https://github.com/junegunn/fzf) | fuzzy finder | github.com/junegunn/fzf |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) | busca de texto rápida | github.com/BurntSushi/ripgrep |
 | [fd](https://github.com/sharkdp/fd) | busca de arquivos rápida | github.com/sharkdp/fd |
