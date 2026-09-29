@@ -17,7 +17,22 @@ cd jb-dev-tools
 ./setup/setup.sh
 ```
 
-O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via apt) e pergunta, um bloco por vez, o que você quer instalar/configurar: tmux, nvim, shell. É seguro rodar de novo: cada módulo é idempotente (pula o que já está instalado, faz backup do que for sobrescrever) e ao final imprime um relatório do que já estava lá, do que foi instalado/atualizado e do que falhou (com um log temporário pra investigar).
+O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via apt) e pergunta, um bloco por vez, o que você quer instalar/configurar: tmux, nvim, shell e Docker. É seguro rodar de novo: cada módulo é idempotente (pula o que já está instalado, faz backup do que for sobrescrever) e ao final imprime um relatório do que já estava lá, do que foi instalado/atualizado e do que falhou (com um log temporário pra investigar).
+
+### Laboratório Docker
+
+O módulo instala Docker Desktop no macOS ou Docker Engine com Compose no Ubuntu/WSL e cria `~/docker-lab`. No macOS, abra o Docker Desktop uma vez para iniciar o engine. No Linux, se o usuário não tiver permissão direta para usar o Docker, rode os comandos com `sudo`.
+
+O compose de exemplo inclui PostgreSQL, Redis, Prometheus e Grafana. Ele não inicia automaticamente; para subir o ambiente:
+
+```bash
+cd ~/docker-lab
+docker compose up -d
+```
+
+Acesse Grafana em <http://localhost:3000> (`admin` / `dev-only-change-me`), Prometheus em <http://localhost:9090> e PostgreSQL em `localhost:5432` (banco/usuário `app`, senha `dev-only-change-me`). Redis fica em `localhost:6379`. Esses valores são apenas para desenvolvimento local; defina `GRAFANA_PASSWORD`, `POSTGRES_PASSWORD` e, se quiser, `POSTGRES_USER`/`POSTGRES_DB` no ambiente antes de subir. Os dados ficam em volumes Docker e persistem após `docker compose down`; `docker compose down -v` os remove.
+
+Uma API executada diretamente na máquina pode conectar ao PostgreSQL usando `postgresql://app:dev-only-change-me@localhost:5432/app` e expor métricas Prometheus em `http://localhost:8080/metrics`; o Prometheus já tenta coletar esse endpoint. Os arquivos de exemplo também ficam em `setup/files/docker/` no repositório.
 
 ## O que o setup configura
 
@@ -40,6 +55,12 @@ O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via 
 | [bash-completion](https://github.com/scop/bash-completion) | completion de comandos (ex.: nomes de sessão do tmux) | github.com/scop/bash-completion |
 | [starship](https://github.com/starship/starship) | prompt | github.com/starship/starship |
 | [lazygit](https://github.com/jesseduffield/lazygit) | TUI pra git | github.com/jesseduffield/lazygit |
+| [Docker](https://www.docker.com/) | containers locais para desenvolvimento | docker.com |
+| [Docker Compose](https://docs.docker.com/compose/) | orquestra serviços do laboratório local | docs.docker.com/compose |
+| [PostgreSQL](https://www.postgresql.org/) | banco relacional de desenvolvimento | postgresql.org |
+| [Redis](https://redis.io/) | cache/armazenamento em memória | redis.io |
+| [Prometheus](https://prometheus.io/) | coleta de métricas da API e do próprio Prometheus | prometheus.io |
+| [Grafana](https://grafana.com/oss/grafana/) | dashboards para Prometheus e PostgreSQL | grafana.com/oss/grafana |
 
 ## Atalhos e aliases pra lembrar
 

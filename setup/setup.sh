@@ -10,6 +10,7 @@ source "$SETUP_DIR/lib/prompt.sh"
 source "$SETUP_DIR/modules/tmux.sh"
 source "$SETUP_DIR/modules/nvim.sh"
 source "$SETUP_DIR/modules/shell.sh"
+source "$SETUP_DIR/modules/docker.sh"
 
 if [[ "$OS" == "unsupported" ]]; then
   echo "Unsupported OS (only macOS and Linux are supported)." >&2
@@ -31,6 +32,10 @@ fi
 
 if ask_yes_no "Configure shell (fzf, bat, ripgrep, fd, zoxide, ble.sh, bash-completion, starship, lazygit, aliases)?"; then
   setup_shell "$SETUP_DIR"
+fi
+
+if ask_yes_no "Install/configure Docker (Docker Engine/Desktop, Compose, PostgreSQL, Redis, Prometheus, Grafana lab)?"; then
+  setup_docker "$SETUP_DIR"
 fi
 
 print_report
