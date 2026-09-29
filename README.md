@@ -75,7 +75,7 @@ O módulo do Neovim configura o Bash Language Server para navegação e símbolo
 - `Alt + h/j/k/l`: navega entre panes (sem precisar do prefix)
 - `prefix + H/J/K/L`: redimensiona o pane atual
 - `prefix + n` / `prefix + p`: próxima/anterior window
-- `prefix + g`: abre um popup com uma sessão dedicada do Claude Code pro diretório atual (fechar o popup só faz detach, não mata o processo)
+- `prefix + g`: abre um popup com uma sessão persistente pro diretório atual. Durante a instalação do tmux, escolha Claude, Codex ou shell genérico; a opção também pode ser alterada em `~/.tmux.conf` pela variável `@ai_cli`. Fechar o popup só faz detach, não mata a sessão.
 - `prefix + Ctrl+l`: limpa a tela e o scrollback
 - `prefix + r`: recarrega o `~/.tmux.conf`
 
