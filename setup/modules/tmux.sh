@@ -1,6 +1,32 @@
 #!/usr/bin/env bash
 # Instala tmux + TPM + plugins e escreve ~/.tmux.conf.
 
+_select_tmux_ai_cli() {
+  local answer
+  while true; do
+    read -r -p "Which CLI should open in the tmux popup? [1] Claude [2] Codex [3] Generic shell [3]: " answer
+    case "${answer:-3}" in
+      1 | claude | Claude | CLAUDE) printf 'claude'; return 0 ;;
+      2 | codex | Codex | CODEX) printf 'codex'; return 0 ;;
+      3 | generic | Generic | shell | Shell) printf ''; return 0 ;;
+      *) echo "Please choose 1 (Claude), 2 (Codex), or 3 (generic shell)." >&2 ;;
+    esac
+  done
+}
+
+_configure_tmux_ai_cli() {
+  local target="$1" ai_cli="$2" tmp
+  tmp="$(mktemp)"
+  awk -v cli="$ai_cli" '
+    /^set -g @ai_cli / {
+      printf "set -g @ai_cli \047%s\047\n", cli
+      next
+    }
+    { print }
+  ' "$target" >"$tmp"
+  mv -f "$tmp" "$target"
+}
+
 setup_tmux() {
   local repo_dir="$1"
 
@@ -24,6 +50,9 @@ setup_tmux() {
     fi
   fi
 
+  local ai_cli
+  ai_cli="$(_select_tmux_ai_cli)"
+
   local target="$HOME/.tmux.conf"
   if [[ -f "$target" ]]; then
     cp -f "$target" "$target.bak-$(date +%Y%m%d-%H%M%S)"
@@ -32,6 +61,12 @@ setup_tmux() {
   else
     cp -f "$repo_dir/files/tmux.conf" "$target"
     report_installed "~/.tmux.conf"
+  fi
+  _configure_tmux_ai_cli "$target" "$ai_cli"
+  if [[ -n "$ai_cli" ]]; then
+    report_updated "tmux popup CLI: $ai_cli"
+  else
+    report_updated "tmux popup CLI: generic shell"
   fi
 
   # O install_plugins.sh do TPM lê as variáveis @plugin de dentro de uma
