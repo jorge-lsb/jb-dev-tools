@@ -29,6 +29,7 @@ _configure_tmux_ai_cli() {
 
 setup_tmux() {
   local repo_dir="$1"
+  local target="$HOME/.tmux.conf"
 
   if pkg_installed tmux; then
     report_already_installed "tmux"
@@ -38,6 +39,11 @@ setup_tmux() {
     else
       return
     fi
+  fi
+
+  if [[ -f "$target" ]] && ask_yes_no "Existing ~/.tmux.conf detected. Skip tmux setup and preserve it?"; then
+    report_already_installed "~/.tmux.conf (preserved; tmux setup skipped)"
+    return
   fi
 
   if [[ -d "$HOME/.tmux/plugins/tpm" ]]; then
@@ -53,7 +59,6 @@ setup_tmux() {
   local ai_cli
   ai_cli="$(_select_tmux_ai_cli)"
 
-  local target="$HOME/.tmux.conf"
   if [[ -f "$target" ]]; then
     cp -f "$target" "$target.bak-$(date +%Y%m%d-%H%M%S)"
     cp -f "$repo_dir/files/tmux.conf" "$target"
