@@ -48,7 +48,7 @@ O script detecta o SO automaticamente (macOS via Homebrew, Linux/WSL Ubuntu via 
 - `Alt + h/j/k/l`: navega entre panes (sem precisar do prefix)
 - `prefix + H/J/K/L`: redimensiona o pane atual
 - `prefix + n` / `prefix + p`: próxima/anterior window
-- `prefix + g`: abre um popup com uma sessão dedicada do Claude Code pro diretório atual (fechar o popup só faz detach, não mata o processo)
+- `prefix + g`: abre um popup com uma sessão persistente pro diretório atual. Em `setup/files/tmux.conf`, configure `@ai_cli` como `codex`, `claude` ou outro CLI; deixe vazio para abrir o shell padrão. Fechar o popup só faz detach, não mata a sessão.
 - `prefix + Ctrl+l`: limpa a tela e o scrollback
 - `prefix + r`: recarrega o `~/.tmux.conf`
 
